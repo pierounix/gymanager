@@ -1,0 +1,111 @@
+<div class="container">
+  <br />
+  <div fxFill fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="card">
+      <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+        <h3>Dettaglio Membro</h3>
+
+        <button fxFlexOffset="10" class="miniButton" mat-button (click)="returnToMembers()" >
+            <mat-icon class="icon">arrow_back</mat-icon>
+            Torna indietro
+          </button>
+      </mat-card-title>
+      <mat-card-content>
+        <form>
+          <div class="anag" fxLayout="column" fxLayoutAlign="space-around center">
+            <div  fxFlexOffset="1" fxFill fxLayout="row" fxLayoutAlign="start center">
+              <mat-form-field fxFlex="40">
+                <input
+                  name="first_name"
+                  matInput
+                  [(ngModel)]="this.member.first_name"
+                  placeholder="Nome"
+                />
+              </mat-form-field>
+              <mat-form-field fxFlex fxFlexOffset="10">
+                <input
+                  [(ngModel)]="this.member.last_name"
+                  placeholder="Cognome"
+                  matInput
+                  name="last_name"
+                />
+              </mat-form-field>
+            </div>
+            <div fxFill fxLayout="row" fxLayoutAlign="start  center">
+              <mat-form-field fxFlex="40">
+                <input
+                  [(ngModel)]="this.member.address"
+                  placeholder="Indirizzo"
+                  matInput
+                  name="address"
+                />
+              </mat-form-field>
+              <mat-form-field fxFlex="20" fxFlexOffset="10">
+                <input
+                  [(ngModel)]="this.member.date_of_birth"
+                  name="date_of_birth"
+                  matInput
+                  [matDatepicker]="picker"
+                  placeholder="Data di nascita"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFill fxLayout="row" fxLayoutAlign="start   center">
+              <mat-form-field fxFlex="40">
+                  <span matPrefix>+39 &nbsp;</span>
+                <input
+                  [(ngModel)]="this.member.telephone"
+                  placeholder="Telefono"
+                  matInput
+                  name="telephone"
+                />
+              </mat-form-field>
+              <mat-form-field fxFlex="20" fxFlexOffset="10">
+                <input
+                  [(ngModel)]="this.member.expiry_date"
+                  name="expiry_date"
+                  matInput
+                  [matDatepicker]="picker2"
+                  placeholder="Scadenza membro"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <br />
+        <mat-divider></mat-divider>
+        <br />
+        <div fxLayout="row" fxLayoutAlign="start  start">
+        <h2>Scheda</h2>
+        <div  fxFlexOffset="5" fxLayout="column" fxLayoutAlign="center center">
+          <button fxFlex="50" *ngIf="isSheetUpdated" (click)="saveSheet()" mat-raised-button color="warn">Salva
+            <mat-icon class="icon">save</mat-icon>
+          </button>
+        </div>
+        </div>
+        <div>
+          <mat-tab-group [backgroundColor]="tab_background">
+            <mat-tab class="mat-tab" label="Lunedì">
+              <app-sheet-maker (updateSheetEvent)="receiveUpdateEvent($event)" [day]="'Lunedì'" [sheet]="sheet"></app-sheet-maker>
+            </mat-tab>
+            <mat-tab label="Martedì"> Content 2 </mat-tab>
+            <mat-tab label="Mercoledì"> Content 3 </mat-tab>
+            <mat-tab label="Giovedì"> Content 3 </mat-tab>
+            <mat-tab label="Venerdì"> Content 3 </mat-tab>
+            <mat-tab label="Sabato"> Content 3 </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

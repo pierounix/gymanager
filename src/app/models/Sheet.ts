@@ -1,0 +1,11 @@
+import { SheetInterface } from './SheetInterface';
+
+export class Sheet implements SheetInterface {
+  id: number;
+  id_member: number;
+  start_date: Date;
+  end_date: Date;
+
+  constructor() {}
+
+}

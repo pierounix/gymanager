@@ -1,0 +1,19 @@
+
+<mat-card class="exercise-card">
+  <mat-card-header fxLayout="row" fxLayoutAlign="center center" >
+    <mat-card-title>{{ exercise.title }}</mat-card-title>
+    <mat-card-subtitle fxLayout="row" fxLayoutAlign="center center">{{ exercise.muscle }}</mat-card-subtitle>
+  </mat-card-header>
+  <div fxFlexFill fxLayoutAlign="center stretch">
+    <img mat-card-sm-image [src]="exercise.image_path" />
+  </div>
+  <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+    <div class="card-text-content">{{ exercise.description }}</div>
+  </mat-card-content>
+
+  <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button  (click)="editExercise()"><mat-icon class="mat-icon">clear</mat-icon></button>
+    <button mat-stroked-button  (click)="editExercise()">Modifica</button>
+  </mat-card-actions>
+</mat-card>
+

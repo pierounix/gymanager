@@ -1,0 +1,12 @@
+.card {
+  min-width: 80%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+a {
+  cursor: pointer;
+}

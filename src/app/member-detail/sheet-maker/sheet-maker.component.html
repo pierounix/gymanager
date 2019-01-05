@@ -1,0 +1,103 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <div fxFill fxLayout="row" fxLayoutAlign="start start">
+    <div fxFlex="30">
+      <mat-list>
+        <mat-list-item *ngFor="let sheetEx of sheetExercises">
+          <p mat-list-icon>{{sheetEx.num_exercise}}</p>
+          <h4 mat-line>{{sheetEx.exercise_title}}</h4>
+          <p mat-line>{{sheetEx.exercise_muscle}}</p>
+          <p mat-line>{{sheetEx.exercise_mode}}</p>
+          <button (click)="moveExerciseDown(sheetEx.num_exercise)"  class="miniButton" mat-button>
+            <mat-icon class="icon">keyboard_arrow_down</mat-icon>
+          </button>
+          <button (click)="moveExerciseUp(sheetEx.num_exercise)" class="miniButton" mat-button>
+            <mat-icon class="icon">keyboard_arrow_up</mat-icon>
+          </button>
+          <button (click)="removeExercise(sheetEx.num_exercise)" class="miniButton" mat-button>
+            <mat-icon class="icon">clear</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <!--end of exercise list-->
+    <div class="sheet-maker" fxFlex>
+      <div fxFill fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field fxFlexOffset="10">
+          <mat-select placeholder="Copia giornata da">
+            <mat-option *ngIf="this.day !== 'Lunedì'" value="Lunedì">Lunedì</mat-option>
+            <mat-option *ngIf="this.day !== 'Martedì'" value="Martedì">Martedì</mat-option>
+            <mat-option *ngIf="this.day !== 'Mercoledì'" value="Mercoledì">Mercoledì</mat-option>
+            <mat-option *ngIf="this.day !== 'Giovedì'" value="Giovedì">Giovedì</mat-option>
+            <mat-option *ngIf="this.day !== 'Venerdì'" value="Venerdì">Venerdì</mat-option>
+            <mat-option *ngIf="this.day !== 'Sabato'" value="Sabato">Sabato</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button fxFlexOffset="10" mat-stroked-button>Copia</button>
+      </div>
+      <mat-divider class="divider"></mat-divider>
+      <div style="margin-top:20px" fxLayout="row" fxLayoutAlign="start start">
+        <h3 fxFlexOffset="10">Aggiungi nuovo</h3>
+      </div>
+      <form (ngSubmit)="onAddExercise()">
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div fxFlexOffset="10" fxLayout="column" fxLayoutAlign="start start">
+            <mat-form-field>
+              <mat-select
+                placeholder="Gruppo muscolare"
+                name="selectedMuscle"
+                [(ngModel)]="selectedMuscle"
+                (selectionChange)="getExercisesByMuscleMass(selectedMuscle)"
+              >
+                <mat-option
+                  *ngFor="let muscle of muscleMasses"
+                  [value]="muscle"
+                >
+                  {{ muscle }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <select
+            [(ngModel)]="selectedExercise"
+            (change)="onSelectExercise($event.target.value)"
+            name="selectedExercise"
+            style="min-width:20%;"
+            fxFlexOffset="10"
+            required
+            size="30"
+          >
+            <option *ngFor="let exercise of exercises" [value]="exercise.id">
+              {{ exercise.title }}</option
+            >
+          </select>
+          <div fxFlexOffset="10" fxLayout="column" fxLayoutAlign="start start">
+            <div style="border-style: 1px solid grey;">
+              <img
+                fxFlexOffset="10"
+                fxFlex="25"
+                *ngIf="selectedExercise.image_path"
+                src="{{ selectedExercise.image_path }}"
+              />
+            </div>
+            <mat-form-field fxFlexOffset="10">
+              <input
+                [(ngModel)]="sheetExercise.exercise_mode"
+                name="mode"
+                required
+                matInput
+                placeholder="Modalità"
+              />
+              <mat-hint align="start"><strong>Esempio: 4x10</strong> </mat-hint>
+            </mat-form-field>
+            <mat-form-field fxFlexOffset="10" fxFlex="30">
+              <textarea matInput placeholder="Note"></textarea>
+            </mat-form-field>
+            <button type="submit" fxFlexOffset="10" mat-stroked-button>
+              Aggiungi
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

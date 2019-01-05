@@ -1,0 +1,69 @@
+<div class="container">
+  <br />
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-card class="card">
+        <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+          <h3>Membri</h3>
+        </mat-card-title>
+        <mat-card-content>
+          <div>
+            <mat-table #table [dataSource]="memberDataSource">
+              <ng-container matColumnDef="first_name">
+                <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  {{ member.first_name }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="last_name">
+                <mat-header-cell *matHeaderCellDef> Cognome </mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  {{ member.last_name }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="date_of_birth">
+                <mat-header-cell *matHeaderCellDef>
+                  Data di nascita
+                </mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  {{ member.date_of_birth | date: "d/M/y" }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="sheet">
+                <mat-header-cell *matHeaderCellDef> Scheda </mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  {{ member.sheet }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Stato </mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  {{ member.status }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="details">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                  <button mat-button (click)="onSelectMember(member)">
+                    <mat-icon class="icon">search</mat-icon>
+                  </button>
+                  <button mat-button (click)="onSelectMember(member)">
+                      <mat-icon class="icon">clear</mat-icon>
+                    </button>
+
+
+                </mat-cell>
+              </ng-container>
+              <mat-header-row
+                *matHeaderRowDef="displayedColumns"
+              ></mat-header-row>
+              <mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></mat-row>
+            </mat-table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

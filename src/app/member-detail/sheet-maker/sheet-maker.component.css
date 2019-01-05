@@ -1,0 +1,15 @@
+.sheet-maker {
+  border-left: 1px solid grey;
+  margin-top: 35px;
+}
+.divider {
+  position: relative;
+}
+
+.miniButton {
+  min-width: 2px;
+}
+
+.sheet-maker #copyFrom {
+  margin-top: 35px;
+}

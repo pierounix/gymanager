@@ -1,0 +1,14 @@
+
+.mat-icon {
+  width: 50px;
+  font-size: 52px
+}
+
+.mat-card-title{
+  text-align: center;
+}
+.exercise-card {
+  background-color: #ccffff;
+  margin: 1em;
+}
+
