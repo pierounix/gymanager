@@ -1,19 +1,19 @@
-<div fxLayout="row" fxLayoutAlign="start center">
-  <div fxFill fxLayout="row" fxLayoutAlign="start start">
-    <div fxFlex="30">
-      <mat-list>
+<div [id]="'div1'+uid" fxLayout="row" fxLayoutAlign="start center">
+  <div [id]="'div2'+uid" fxFill fxLayout="row" fxLayoutAlign="start start">
+    <div [id]="'div3'+uid" fxFlex="30">
+      <mat-list [id]="'sheetList'+uid">
         <mat-list-item *ngFor="let sheetEx of sheetExercises">
           <p mat-list-icon>{{sheetEx.num_exercise}}</p>
           <h4 mat-line>{{sheetEx.exercise_title}}</h4>
           <p mat-line>{{sheetEx.exercise_muscle}}</p>
           <p mat-line>{{sheetEx.exercise_mode}}</p>
-          <button (click)="moveExerciseDown(sheetEx.num_exercise)"  class="miniButton" mat-button>
+          <button [id]="'moveDown'+uid" [name]="'moveDown'+uid" (click)="moveExerciseDown(sheetEx.num_exercise)" class="miniButton" mat-button>
             <mat-icon class="icon">keyboard_arrow_down</mat-icon>
           </button>
-          <button (click)="moveExerciseUp(sheetEx.num_exercise)" class="miniButton" mat-button>
+          <button [id]="'moveUp'+uid" [name]="'moveUp'+uid" (click)="moveExerciseUp(sheetEx.num_exercise)" class="miniButton" mat-button>
             <mat-icon class="icon">keyboard_arrow_up</mat-icon>
           </button>
-          <button (click)="removeExercise(sheetEx.num_exercise)" class="miniButton" mat-button>
+          <button [id]="'remove'+uid" [name]="'remove'+uid" (click)="removeExercise(sheetEx.num_exercise)" class="miniButton" mat-button>
             <mat-icon class="icon">clear</mat-icon>
           </button>
         </mat-list-item>
@@ -23,28 +23,27 @@
     <div class="sheet-maker" fxFlex>
       <div fxFill fxLayout="row" fxLayoutAlign="start center">
         <mat-form-field fxFlexOffset="10">
-          <mat-select placeholder="Copia giornata da">
+          <mat-select [id]="'copySelect'+uid" [name]="'copy'+uid" [(ngModel)]="this.dayToCopyFrom" placeholder="Copia giornata da">
             <mat-option *ngIf="this.day !== 'Lunedì'" value="Lunedì">Lunedì</mat-option>
             <mat-option *ngIf="this.day !== 'Martedì'" value="Martedì">Martedì</mat-option>
             <mat-option *ngIf="this.day !== 'Mercoledì'" value="Mercoledì">Mercoledì</mat-option>
             <mat-option *ngIf="this.day !== 'Giovedì'" value="Giovedì">Giovedì</mat-option>
             <mat-option *ngIf="this.day !== 'Venerdì'" value="Venerdì">Venerdì</mat-option>
-            <mat-option *ngIf="this.day !== 'Sabato'" value="Sabato">Sabato</mat-option>
           </mat-select>
         </mat-form-field>
-        <button fxFlexOffset="10" mat-stroked-button>Copia</button>
+        <button [id]="'copyBtn'+uid" [name]="'copyBtn'+uid" (click)="copyDay(this.dayToCopyFrom)" fxFlexOffset="10" mat-stroked-button>Copia</button>
       </div>
       <mat-divider class="divider"></mat-divider>
       <div style="margin-top:20px" fxLayout="row" fxLayoutAlign="start start">
         <h3 fxFlexOffset="10">Aggiungi nuovo</h3>
       </div>
-      <form (ngSubmit)="onAddExercise()">
+      <form [id]="'sheetForm'+uid"  (ngSubmit)="onAddExercise()">
         <div fxLayout="row" fxLayoutAlign="start start">
           <div fxFlexOffset="10" fxLayout="column" fxLayoutAlign="start start">
             <mat-form-field>
-              <mat-select
+              <mat-select [id]="'selectMuscle'+uid"
                 placeholder="Gruppo muscolare"
-                name="selectedMuscle"
+                [name]="'selectMuscle'+uid"
                 [(ngModel)]="selectedMuscle"
                 (selectionChange)="getExercisesByMuscleMass(selectedMuscle)"
               >
@@ -57,10 +56,10 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <select
+          <select [id]="'selectEx'+uid"
             [(ngModel)]="selectedExercise"
             (change)="onSelectExercise($event.target.value)"
-            name="selectedExercise"
+            name="selectedExercise{{this.day}}"
             style="min-width:20%;"
             fxFlexOffset="10"
             required
@@ -80,9 +79,9 @@
               />
             </div>
             <mat-form-field fxFlexOffset="10">
-              <input
+              <input [id]="'exMode'+uid"
                 [(ngModel)]="sheetExercise.exercise_mode"
-                name="mode"
+                [name]="'exMode'+uid"
                 required
                 matInput
                 placeholder="Modalità"

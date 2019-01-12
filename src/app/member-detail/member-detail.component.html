@@ -5,15 +5,29 @@
       <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
         <h3>Dettaglio Membro</h3>
 
-        <button fxFlexOffset="10" class="miniButton" mat-button (click)="returnToMembers()" >
-            <mat-icon class="icon">arrow_back</mat-icon>
-            Torna indietro
-          </button>
+        <button
+          fxFlexOffset="10"
+          class="miniButton"
+          mat-button
+          (click)="returnToMembers()"
+        >
+          <mat-icon class="icon">arrow_back</mat-icon>
+          Torna indietro
+        </button>
       </mat-card-title>
       <mat-card-content>
         <form>
-          <div class="anag" fxLayout="column" fxLayoutAlign="space-around center">
-            <div  fxFlexOffset="1" fxFill fxLayout="row" fxLayoutAlign="start center">
+          <div
+            class="anag"
+            fxLayout="column"
+            fxLayoutAlign="space-around center"
+          >
+            <div
+              fxFlexOffset="1"
+              fxFill
+              fxLayout="row"
+              fxLayoutAlign="start center"
+            >
               <mat-form-field fxFlex="40">
                 <input
                   name="first_name"
@@ -57,7 +71,7 @@
             </div>
             <div fxFill fxLayout="row" fxLayoutAlign="start   center">
               <mat-form-field fxFlex="40">
-                  <span matPrefix>+39 &nbsp;</span>
+                <span matPrefix>+39 &nbsp;</span>
                 <input
                   [(ngModel)]="this.member.telephone"
                   placeholder="Telefono"
@@ -86,23 +100,31 @@
         <mat-divider></mat-divider>
         <br />
         <div fxLayout="row" fxLayoutAlign="start  start">
-        <h2>Scheda</h2>
-        <div  fxFlexOffset="5" fxLayout="column" fxLayoutAlign="center center">
-          <button fxFlex="50" *ngIf="isSheetUpdated" (click)="saveSheet()" mat-raised-button color="warn">Salva
-            <mat-icon class="icon">save</mat-icon>
-          </button>
-        </div>
+          <h2>Scheda: {{this.sheet.sheet_name}}</h2>
+          <div fxFlexOffset="5" fxLayout="column" fxLayoutAlign="center center">
+            <button
+              fxFlex="50"
+              *ngIf="isSheetUpdated"
+              (click)="saveSheet()"
+              mat-raised-button
+              color="warn"
+            >
+              Salva
+              <mat-icon class="icon">save</mat-icon>
+            </button>
+          </div>
         </div>
         <div>
           <mat-tab-group [backgroundColor]="tab_background">
-            <mat-tab class="mat-tab" label="Lunedì">
-              <app-sheet-maker (updateSheetEvent)="receiveUpdateEvent($event)" [day]="'Lunedì'" [sheet]="sheet"></app-sheet-maker>
+            <mat-tab *ngFor="let day of days" class="mat-tab" label="{{ day }}">
+              <app-sheet-maker
+                (updateSheetEvent)="receiveUpdateEvent($event)"
+                (copySheetEvent)="copySheetDay($event)"
+                [sheetExercises]="getSheetExercisesByDay(day)"
+                [day]="day"
+                [sheet]="sheet"
+              ></app-sheet-maker>
             </mat-tab>
-            <mat-tab label="Martedì"> Content 2 </mat-tab>
-            <mat-tab label="Mercoledì"> Content 3 </mat-tab>
-            <mat-tab label="Giovedì"> Content 3 </mat-tab>
-            <mat-tab label="Venerdì"> Content 3 </mat-tab>
-            <mat-tab label="Sabato"> Content 3 </mat-tab>
           </mat-tab-group>
         </div>
       </mat-card-content>

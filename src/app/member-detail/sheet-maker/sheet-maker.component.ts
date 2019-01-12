@@ -4,6 +4,9 @@ import { Sheet } from 'src/app/models/Sheet';
 import { SheetExercise } from 'src/app/models/SheetExercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { SheetExerciseService } from 'src/app/services/sheet-exercise.service';
+import { IfStmt } from '@angular/compiler';
+
+let uniqueId = 0;
 
 @Component({
   selector: 'app-sheet-maker',
@@ -16,9 +19,17 @@ export class SheetMakerComponent implements OnInit {
   selectedMuscle: string;
   exercises: Array<Exercise>;
   selectedExercise: Exercise;
-  sheetExercises: Array<SheetExercise>;
+
   sheetExercise: SheetExercise;
-  @Output() updateSheetEvent = new EventEmitter<Array<SheetExercise>>();
+  dayToCopyFrom: string;
+  uid = uniqueId++;
+
+  @Output() updateSheetEvent = new EventEmitter<any>();
+
+  @Output() copySheetEvent = new EventEmitter<any>();
+
+  @Input()
+  sheetExercises: Array<SheetExercise>;
 
   @Input()
   sheet: Sheet;
@@ -31,22 +42,28 @@ export class SheetMakerComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.onSelectDay();
+  }
+
+  onSelectDay() {
     this.selectedExercise = new Exercise();
     this.sheetExercise = new SheetExercise();
     this.sheetExercise.day = this.day;
     this.muscleMasses = ['Addominali', 'Dorsali', 'Spalle', 'Pettorali', 'Bicipiti', 'Tricipiti', 'Gambe'];
-    this.getSheetExercises();
   }
 
-
   removeExercise(num_exercise: number) {
+    this.sheetExercises.forEach( (item) => {
+      console.log(item.day);
+
+    });
     const index = this.sheetExercises.findIndex (ind => ind.num_exercise === num_exercise);
     if (index !== -1) {
       for (let i = index; i < this.sheetExercises.length; i++) {
         this.sheetExercises[i].num_exercise--;
       }
       this.sheetExercises.splice(index, 1);
-      this.updateSheetEvent.emit(this.sheetExercises);
+      this.updateSheetEvent.emit({se: this.sheetExercises, dd: this.day});
     }
   }
 
@@ -57,7 +74,7 @@ export class SheetMakerComponent implements OnInit {
       this.sheetExercises.splice(index + 1, 1);
       this.sheetExercises[index - 1].num_exercise --;
       this.sheetExercises[index].num_exercise ++;
-      this.updateSheetEvent.emit(this.sheetExercises);
+      this.updateSheetEvent.emit({se: this.sheetExercises, dd: this.day});
     }
   }
 
@@ -68,12 +85,8 @@ export class SheetMakerComponent implements OnInit {
       this.sheetExercises.splice(index, 1);
       this.sheetExercises[index + 1].num_exercise ++;
       this.sheetExercises[index].num_exercise --;
-      this.updateSheetEvent.emit(this.sheetExercises);
+      this.updateSheetEvent.emit({se: this.sheetExercises, dd: this.day});
     }
-  }
-
-  private getSheetExercises() {
-    this.sheetExercises = this.sheetExerciseService.getSheetExercisesByDay(this.sheet.id, this.day);
   }
 
   private getExercisesByMuscleMass(muscleMass: string) {
@@ -89,16 +102,23 @@ export class SheetMakerComponent implements OnInit {
   onAddExercise() {
     this.sheetExercise.exercise_title = this.selectedExercise.title;
     this.sheetExercise.exercise_muscle = this.selectedExercise.muscle;
-    this.sheetExercise.num_exercise = Math.max.apply(Math, this.sheetExercises.map(function(o) { return o.num_exercise + 1; }));
+    this.sheetExercise.day = this.day;
+    if (this.sheetExercises.length > 0) {
+      this.sheetExercise.num_exercise = Math.max.apply(Math, this.sheetExercises.map(function(o) { return o.num_exercise + 1; }));
+    } else {
+      this.sheetExercise.num_exercise = 1;
+    }
     if (this.sheetExercise.exercise_title != null &&
       this.sheetExercise.exercise_mode != null &&
       this.sheetExercise.exercise_muscle != null ) {
     this.sheetExercises.push(this.sheetExercise);
-    this.updateSheetEvent.emit(this.sheetExercises);
+    this.updateSheetEvent.emit({se: this.sheetExercises, dd: this.day});
     }
     this.sheetExercise = new SheetExercise();
   }
 
-
+  copyDay(dayToCopyFrom: string) {
+    this.copySheetEvent.emit({fromdd: dayToCopyFrom, todd: this.day});
+  }
 
 }
