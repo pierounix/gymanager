@@ -6,7 +6,7 @@ import { Icon } from '../models/Icon';
 })
 export class IconService {
 
-  ELEMENT_DATA: Icon[] = [{title: 'Lat Machine', path: '../assets/images/latmachine.png'}];
+  ELEMENT_DATA: Icon[] = [{id: 1, title: 'Lat Machine', path: '../assets/images/latmachine.png'}];
 
   constructor() { }
 

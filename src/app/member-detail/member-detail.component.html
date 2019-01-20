@@ -4,6 +4,20 @@
     <mat-card class="card">
       <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
         <h3>Dettaglio Membro</h3>
+        <div fxLayout="row" fxLayoutAlign="start  start">
+          <div fxFlexOffset="40" fxLayout="column" fxLayoutAlign="center center">
+            <button
+              fxFlex="40"
+              *ngIf="memberForm.dirty"
+              (click)="saveMember()"
+              mat-raised-button
+              color="warn"
+            >
+              Salva
+              <mat-icon class="icon">save</mat-icon>
+            </button>
+          </div>
+        </div>
 
         <button
           fxFlexOffset="10"
@@ -16,7 +30,7 @@
         </button>
       </mat-card-title>
       <mat-card-content>
-        <form>
+        <form #memberForm="ngForm">
           <div
             class="anag"
             fxLayout="column"

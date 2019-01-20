@@ -28,13 +28,21 @@ export class MemberDetailComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.member = new Member();
     this.route.params.subscribe(
       (params) => {
-        this.member = this.memberService.getMember(+params.idmember);
+        this.memberService.getMember(+params.idmember).subscribe (member => {
+          this.member = member;
+        });
        }
     );
     this.days = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì'];
-    this.sheet = this.sheetService.getSheetByMemeberId(this.member.id);
+    const newsheet = this.sheetService.getSheetByMemeberId(this.member.id);
+    if (newsheet != null) {
+      this.sheet = newsheet;
+    } else {
+      this.sheet = new Sheet();
+    }
     this.isSheetUpdated = false;
     this.sheetExercises = this.getSheetExercises();
   }
@@ -83,6 +91,10 @@ export class MemberDetailComponent implements OnInit {
   saveSheet() {
     console.log('Save');
     this.isSheetUpdated = false;
+  }
+
+  saveMember() {
+    this.memberService.updateMember(this.member);
   }
 
   private getSheetExercises(): Array<SheetExercise> {

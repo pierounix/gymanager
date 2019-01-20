@@ -15,6 +15,7 @@ import { MemberDetailComponent } from './member-detail/member-detail.component';
 import { SheetMakerComponent } from './member-detail/sheet-maker/sheet-maker.component';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -35,13 +36,14 @@ import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-mome
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   entryComponents: [NewExerciseComponentDialogComponent],
   providers: [MemberService,
     {provide: MAT_DATE_LOCALE, useValue: 'it-IT'}, ,
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}, ],
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
