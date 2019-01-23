@@ -6,6 +6,7 @@ import { SheetService } from '../services/sheet.service';
 import { Sheet } from '../models/Sheet';
 import { SheetExercise } from '../models/SheetExercise';
 import { SheetExerciseService } from '../services/sheet-exercise.service';
+import { NgForm, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-member-detail',
@@ -20,6 +21,7 @@ export class MemberDetailComponent implements OnInit {
   sheetExercises: Array<SheetExercise>;
   isSheetUpdated: boolean;
   days: Array<String>;
+
 
   constructor(private memberService: MemberService,
     private sheetService: SheetService,
@@ -93,8 +95,24 @@ export class MemberDetailComponent implements OnInit {
     this.isSheetUpdated = false;
   }
 
-  saveMember() {
+  saveMember(memberform: NgForm) {
+    if (memberform.controls.date_of_birth.dirty) {
+      const _bdate = new Date();
+      _bdate.setFullYear(this.member.date_of_birth['_i']['year']);
+      _bdate.setMonth(this.member.date_of_birth['_i']['month']);
+      _bdate.setDate(this.member.date_of_birth['_i']['date']);
+      this.member.date_of_birth = _bdate;
+    }
+    if (memberform.controls.expiry_date.dirty) {
+    const _edate = new Date();
+    _edate.setFullYear(this.member.expiry_date['_i']['year']);
+    _edate.setMonth(this.member.expiry_date['_i']['month']);
+    _edate.setDate(this.member.expiry_date['_i']['date']);
+    this.member.expiry_date = _edate;
+    }
     this.memberService.updateMember(this.member);
+    this._markFormPristine(memberform);
+
   }
 
   private getSheetExercises(): Array<SheetExercise> {
@@ -104,5 +122,11 @@ export class MemberDetailComponent implements OnInit {
   getSheetExercisesByDay(day: string):  Array<SheetExercise> {
     return this.sheetExercises.filter(sheetExercise => sheetExercise.day === day);
   }
+
+  private _markFormPristine(form: FormGroup | NgForm): void {
+    Object.keys(form.controls).forEach(control => {
+        form.controls[control].markAsPristine();
+    });
+}
 
 }

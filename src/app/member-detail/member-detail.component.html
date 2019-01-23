@@ -9,7 +9,7 @@
             <button
               fxFlex="40"
               *ngIf="memberForm.dirty"
-              (click)="saveMember()"
+              (click)="saveMember(memberForm)"
               mat-raised-button
               color="warn"
             >
