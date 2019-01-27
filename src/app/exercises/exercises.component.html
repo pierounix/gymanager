@@ -1,24 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Addominali">
-    <div
-      fxLayout="row"
-      fxFlex.md="70"
-      fxLayoutWrap
-    >
-    <app-newexercise  [muscleMass]="'Addominali'"></app-newexercise>
-
-      <div
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngFor="let exercise of getExercises()"
-        class="card-item"
-      >
-        <app-exercise
-          [ngStyle]="{ width: '300' + 'px' }"
-          [exercise]="exercise"
-        ></app-exercise>
-      </div>
-    </div>
+    <app-exercise-musclelist [muscle]="'Addominali'"></app-exercise-musclelist>
   </mat-tab>
   <mat-tab label="Pettorali">
     <h1>Some more tab content</h1>

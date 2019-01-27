@@ -32,6 +32,10 @@
   background-color: #008CBA;
 }
 
+.mat-dialog-title {
+  background-color: #ccffff
+}
+
 .container:hover .overlay {
   opacity: 1;
 }

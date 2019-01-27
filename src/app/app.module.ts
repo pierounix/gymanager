@@ -15,7 +15,9 @@ import { MemberDetailComponent } from './member-detail/member-detail.component';
 import { SheetMakerComponent } from './member-detail/sheet-maker/sheet-maker.component';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './services/request-interceptor';
+import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exercise-musclelist.component';
 
 
 
@@ -28,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     NewExerciseComponent,
     NewExerciseComponentDialogComponent,
     MemberDetailComponent,
-    SheetMakerComponent
+    SheetMakerComponent,
+    ExerciseMusclelistComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,11 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   entryComponents: [NewExerciseComponentDialogComponent],
   providers: [MemberService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true,
+    },
     {provide: MAT_DATE_LOCALE, useValue: 'it-IT'}, ,
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}],

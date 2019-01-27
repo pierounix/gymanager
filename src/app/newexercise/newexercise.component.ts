@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { Exercise } from '../models/Exercise';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { IconService } from '../services/icon.service';
 import { Icon } from '../models/Icon';
+import { ExerciseService } from '../services/exercise.service';
 
 @Component({
   selector: 'app-newexercise',
@@ -12,6 +13,8 @@ import { Icon } from '../models/Icon';
 export class NewExerciseComponent {
 
   newexercise: Exercise;
+
+  @Output() newExerciseAdded = new EventEmitter<any>();
 
   @Input()
   muscleMass: string;
@@ -30,7 +33,7 @@ export class NewExerciseComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.newexercise = result;
-      console.log(this.newexercise.title);
+      this.newExerciseAdded.emit();
     });
   }
 }
@@ -46,9 +49,10 @@ export class NewExerciseComponentDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NewExerciseComponentDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public newexercise: Exercise, private iconService: IconService
+    @Inject(MAT_DIALOG_DATA) public newexercise: Exercise, private iconService: IconService,
+    private exerciseService: ExerciseService
   ) {
-    this.icons = this.getIcons();
+    this.getIcons();
   }
 
   onNoClick(): void {
@@ -58,6 +62,7 @@ export class NewExerciseComponentDialogComponent {
   onSave(): void {
     if (this.newexercise.image_path != null
       && this.newexercise.title != null) {
+        this.saveExercise();
         this.dialogRef.close(this.newexercise);
       }
   }
@@ -66,7 +71,19 @@ export class NewExerciseComponentDialogComponent {
     this.newexercise.image_path = path;
   }
 
-  getIcons(): Icon[] {
-    return this.iconService.getIcons();
+  getIcons() {
+    this.iconService.getIcons().subscribe( icons => {
+      this.icons = icons;
+    });
   }
+
+  saveExercise() {
+    this.exerciseService.addExercise(this.newexercise).subscribe(
+      data => {},
+           error => {
+               console.log('ERROR updating exercise', error);
+           }
+       );
+  }
+
 }

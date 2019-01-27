@@ -1,0 +1,22 @@
+<div
+fxLayout="row"
+fxFlex.md="70"
+fxLayoutWrap
+>
+<app-newexercise (newExerciseAdded)="refreshList()"
+                  [muscleMass]="this.muscle">
+</app-newexercise>
+
+<div
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  *ngFor="let exercise of exercises"
+  class="card-item"
+>
+  <app-exercise
+    [ngStyle]="{ width: '300' + 'px' }"
+    [exercise]="exercise"
+    (exerciseRemoved)="onElementDeleted($event)">
+  </app-exercise>
+</div>
+</div>

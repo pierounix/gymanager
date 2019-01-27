@@ -10,18 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class ExercisesComponent implements OnInit {
 
-  exercises: Array<Exercise>;
+
 
   constructor(private exerciseService: ExerciseService) {
-    this.exercises = this.exerciseService.getExercises();
   }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  getExercises(): Exercise[] {
-    return this.exerciseService.getExercises();
-  }
 
 }

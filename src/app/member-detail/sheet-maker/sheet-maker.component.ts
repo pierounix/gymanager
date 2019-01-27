@@ -92,11 +92,15 @@ export class SheetMakerComponent implements OnInit {
   private getExercisesByMuscleMass(muscleMass: string) {
     this.selectedExercise = new Exercise();
     this.sheetExercise = new SheetExercise();
-    this.exercises = this.exerciseService.getExercisesByMuscleMass(muscleMass);
+    this.exerciseService.getExercisesByMuscleMass(muscleMass).subscribe(exercises => {
+      this.exercises = exercises;
+    });
   }
 
   private onSelectExercise(id_exercise: number) {
-    this.selectedExercise = this.exerciseService.getExerciseById(+id_exercise);
+    this.exerciseService.getExerciseById(+id_exercise).subscribe(exercise => {
+      this.selectedExercise = exercise;
+    });
   }
 
   onAddExercise() {

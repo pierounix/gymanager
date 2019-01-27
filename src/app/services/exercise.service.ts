@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from '../models/Exercise';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const API_URL = environment.apiURL;
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +25,25 @@ export class ExerciseService {
     {id: 3, title: 'Pectoral machine', description: 'Spingere in avanti', muscle: 'Pettorali', image_path: '../assets/images/latmachine.png'}
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  getExercises(): Exercise[] {
-    return <Exercise[]>(this.exercises);
+  getExercises(): Observable<Exercise[]> {
+    return this.httpClient.get<Exercise[]>(API_URL + '/exercises');
   }
 
-  getExercisesByMuscleMass(muscleMass: string): Exercise[] {
-    return this.exercises.filter(exercise => exercise.muscle === muscleMass);
+  getExercisesByMuscleMass(muscleMass: string): Observable<Exercise[]> {
+    return this.httpClient.get<Exercise[]>(API_URL + '/exercises/muscle/' + muscleMass);
   }
 
-  getExerciseById(id: number): Exercise {
-     return this.exercises.find(exercise => exercise.id === id);
+  getExerciseById(id: number): Observable<Exercise> {
+    return this.httpClient.get<Exercise>(API_URL + '/exercises/' + id);
+  }
+
+  addExercise(exercise: Exercise): Observable<Exercise> {
+    return this.httpClient.post<Exercise>(API_URL + '/exercises/', exercise, httpOptions);
+  }
+
+  removeExercise(id: number): Observable<Exercise> {
+    return this.httpClient.delete<Exercise>(API_URL + '/exercises/' + id);
   }
 }
