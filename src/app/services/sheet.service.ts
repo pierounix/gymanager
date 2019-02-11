@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Sheet } from '../models/Sheet';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+
+const API_URL = environment.apiURL;
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +21,11 @@ export class SheetService {
     {id: 2, id_member: 2, start_date: new Date(), end_date: new Date(), sheet_name: 'Tonificazione'},
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  getSheet(id_member: number): Sheet {
-    return this.sheets.find(sheet => sheet.id_member === id_member);
+  getSheetByMemberId(id_member: number): Observable<Sheet> {
+    // return this.sheets.find(sheet => sheet.id_member === id_member);
+    return this.httpClient.get<Sheet>(API_URL + '/sheets/' + id_member);
   }
 
-  getSheetByMemeberId(id_member: number): Sheet {
-    return this.sheets.find(sheet => sheet.id_member === id_member);
-  }
 }

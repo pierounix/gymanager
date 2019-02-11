@@ -25,9 +25,10 @@ export class ExerciseMusclelistComponent implements OnInit {
   }
 
   onElementDeleted($event) {
-    if ($event.id !== 0) {
-      this.exercises = this.exercises.filter(item => item.id === $event.id);
-    }
+
+    const index = this.exercises.findIndex( ex => ex.id === $event );
+    this.exercises.splice(index, 1);
+    console.log(this.exercises);
   }
 
   getExercisesByMuscleMass(muscle: string) {

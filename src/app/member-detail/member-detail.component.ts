@@ -18,7 +18,7 @@ export class MemberDetailComponent implements OnInit {
   tab_background = 'primary';
   member: Member;
   sheet: Sheet;
-  sheetExercises: Array<SheetExercise>;
+  sheetExercises: SheetExercise[];
   isSheetUpdated: boolean;
   days: Array<String>;
 
@@ -30,23 +30,25 @@ export class MemberDetailComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.sheet = new Sheet();
+    this.sheetExercises = [];
     this.member = new Member();
     this.route.params.subscribe(
       (params) => {
         this.memberService.getMember(+params.idmember).subscribe (member => {
           this.member = member;
+          this.sheetService.getSheetByMemberId(this.member.id).subscribe (sheet => {
+            this.sheet = sheet;
+            this.sheetExerciseService.getSheetExercises(this.sheet.id).subscribe (sheetExercises => {
+              this.sheetExercises = sheetExercises;
+            });
+          });
         });
        }
     );
     this.days = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì'];
-    const newsheet = this.sheetService.getSheetByMemeberId(this.member.id);
-    if (newsheet != null) {
-      this.sheet = newsheet;
-    } else {
-      this.sheet = new Sheet();
-    }
     this.isSheetUpdated = false;
-    this.sheetExercises = this.getSheetExercises();
+
   }
 
   returnToMembers() {
@@ -91,7 +93,7 @@ export class MemberDetailComponent implements OnInit {
   }
 
   saveSheet() {
-    console.log('Save');
+    this.sheetExerciseService.uploadSheetExercises(this.sheetExercises);
     this.isSheetUpdated = false;
   }
 
@@ -113,10 +115,6 @@ export class MemberDetailComponent implements OnInit {
     this.memberService.updateMember(this.member);
     this._markFormPristine(memberform);
 
-  }
-
-  private getSheetExercises(): Array<SheetExercise> {
-    return this.sheetExerciseService.getSheetExercises(this.sheet.id);
   }
 
   getSheetExercisesByDay(day: string):  Array<SheetExercise> {

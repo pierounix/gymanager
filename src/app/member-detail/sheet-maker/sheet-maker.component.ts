@@ -54,8 +54,6 @@ export class SheetMakerComponent implements OnInit {
 
   removeExercise(num_exercise: number) {
     this.sheetExercises.forEach( (item) => {
-      console.log(item.day);
-
     });
     const index = this.sheetExercises.findIndex (ind => ind.num_exercise === num_exercise);
     if (index !== -1) {

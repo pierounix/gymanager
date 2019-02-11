@@ -29,8 +29,9 @@
           Torna indietro
         </button>
       </mat-card-title>
+      <form #memberForm="ngForm">
       <mat-card-content>
-        <form #memberForm="ngForm">
+
           <div
             class="anag"
             fxLayout="column"
@@ -109,12 +110,19 @@
               </mat-form-field>
             </div>
           </div>
-        </form>
+
         <br />
         <mat-divider></mat-divider>
         <br />
         <div fxLayout="row" fxLayoutAlign="start  start">
-          <h2>Scheda: {{this.sheet.sheet_name}}</h2>
+          <h2>Scheda:</h2>
+          <mat-form-field fxFlex="30" fxFlexOffset="5">
+          <input class ="title_sheet"
+                  name="sheet_name"
+                  matInput
+                  [(ngModel)]="this.sheet.sheet_name"
+                />
+         </mat-form-field>
           <div fxFlexOffset="5" fxLayout="column" fxLayoutAlign="center center">
             <button
               fxFlex="50"
@@ -142,6 +150,7 @@
           </mat-tab-group>
         </div>
       </mat-card-content>
+    </form>
     </mat-card>
   </div>
 </div>

@@ -1,6 +1,14 @@
-import { Injectable } from '@angular/core';
-import { SheetExercise } from '../models/SheetExercise';
+import { Injectable, ɵConsole } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { SheetExercise } from '../models/SheetExercise';
+
+const API_URL = environment.apiURL;
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +24,21 @@ export class SheetExerciseService {
   ];
 
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
 
-  getSheetExercises(id_sheet: number): SheetExercise[] {
-    return this.sheetExercises;
+  getSheetExercises(id_sheet: number): Observable<SheetExercise[]> {
+    // return this.sheetExercises;
+    return this.httpClient.get<SheetExercise[]>(API_URL + '/sheetexercises/' + id_sheet);
   }
 
-  getSheetExercisesByDay(id_sheet: number, day: string): Array<SheetExercise> {
-    return this.sheetExercises.filter(sheetExercise => sheetExercise.day === day);
+  getSheetExercisesByDay(id_sheet: number, day: string): Observable<SheetExercise[]> {
+    // return this.sheetExercises.filter(sheetExercise => sheetExercise.day === day);
+    return this.httpClient.get<SheetExercise[]>(API_URL + '/sheetexercises/' + id_sheet + '/' + day);
+  }
+
+  uploadSheetExercises(sheetExercises: SheetExercise[]) {
+    return this.httpClient.post<SheetExercise[]>(API_URL + '/sheetexercises/', sheetExercises[1], httpOptions);
   }
 
 }
