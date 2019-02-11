@@ -38,7 +38,7 @@ export class SheetExerciseService {
   }
 
   uploadSheetExercises(sheetExercises: SheetExercise[]) {
-    return this.httpClient.post<SheetExercise[]>(API_URL + '/sheetexercises/', sheetExercises[1], httpOptions);
+    return this.httpClient.post<SheetExercise[]>(API_URL + '/sheetexercises/', sheetExercises, httpOptions);
   }
 
 }
