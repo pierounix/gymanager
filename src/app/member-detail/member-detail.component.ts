@@ -93,7 +93,20 @@ export class MemberDetailComponent implements OnInit {
   }
 
   saveSheet() {
-    this.sheetExerciseService.uploadSheetExercises(this.sheetExercises);
+    this.sheetExerciseService.removeSheetExercises(this.sheet.id).subscribe(
+      data => {
+        this.sheetExerciseService.uploadSheetExercises(this.sheetExercises).subscribe(
+          data1 => {},
+               error => {
+                   console.log('ERROR updating exercises', error);
+               }
+           );
+      },
+      error => {
+          console.log('ERROR updating exercises', error);
+      }
+    );
+
     this.isSheetUpdated = false;
   }
 
@@ -113,6 +126,7 @@ export class MemberDetailComponent implements OnInit {
     this.member.expiry_date = _edate;
     }
     this.memberService.updateMember(this.member);
+    this.sheetService.updateSheet(this.sheet);
     this._markFormPristine(memberform);
 
   }

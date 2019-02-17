@@ -104,6 +104,7 @@ export class SheetMakerComponent implements OnInit {
   onAddExercise() {
     this.sheetExercise.exercise_title = this.selectedExercise.title;
     this.sheetExercise.exercise_muscle = this.selectedExercise.muscle;
+    this.sheetExercise.id_sheet = this.sheet.id;
     this.sheetExercise.day = this.day;
     if (this.sheetExercises.length > 0) {
       this.sheetExercise.num_exercise = Math.max.apply(Math, this.sheetExercises.map(function(o) { return o.num_exercise + 1; }));

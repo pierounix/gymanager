@@ -41,4 +41,7 @@ export class SheetExerciseService {
     return this.httpClient.post<SheetExercise[]>(API_URL + '/sheetexercises/', sheetExercises, httpOptions);
   }
 
+  removeSheetExercises(id_sheet: number): Observable<SheetExercise> {
+    return this.httpClient.delete<SheetExercise>(API_URL + '/sheetexercises/' + id_sheet);
+  }
 }

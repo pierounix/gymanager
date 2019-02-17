@@ -28,4 +28,16 @@ export class SheetService {
     return this.httpClient.get<Sheet>(API_URL + '/sheets/' + id_member);
   }
 
+  updateSheet(sheet: Sheet) {
+    const url = API_URL + '/sheets/';
+
+    return this.httpClient.put(url, sheet, httpOptions).subscribe(
+       data => {},
+            error => {
+                console.log('ERROR updating sheet', error);
+            }
+        );
+  }
+
+
 }
