@@ -7,6 +7,7 @@ import { Sheet } from '../models/Sheet';
 import { SheetExercise } from '../models/SheetExercise';
 import { SheetExerciseService } from '../services/sheet-exercise.service';
 import { NgForm, FormGroup } from '@angular/forms';
+import { AlertService } from '../services/alert-service.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -27,7 +28,8 @@ export class MemberDetailComponent implements OnInit {
     private sheetService: SheetService,
     private sheetExerciseService: SheetExerciseService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.sheet = new Sheet();
@@ -68,11 +70,13 @@ export class MemberDetailComponent implements OnInit {
     const dayFromUpdate = $event['fromdd'];
     const dayToUpdate = $event['todd'];
 
-    this.sheetExercises.forEach((f, index) => {
-      if (f.day === dayToUpdate) {
-        this.sheetExercises.splice(index, 1);
-      }
+    // Clear the target day
+
+    const sheetExerciseList = this.sheetExercises.filter(function(exer) {
+      return exer.day !== dayToUpdate;
     });
+
+    this.sheetExercises = sheetExerciseList;
 
     const seList = new Array<SheetExercise>();
     let numEx = 1;
@@ -108,7 +112,7 @@ export class MemberDetailComponent implements OnInit {
           console.log('ERROR updating exercises', error);
       }
     );
-
+    this.alertService.create('INFO', 5000, 'Scheda salvata');
     this.isSheetUpdated = false;
   }
 
@@ -130,7 +134,7 @@ export class MemberDetailComponent implements OnInit {
     this.memberService.updateMember(this.member);
     this.sheetService.updateSheet(this.sheet);
     this._markFormPristine(memberform);
-
+    this.alertService.create('INFO', 5000, 'Informazioni aggiornate');
   }
 
   getSheetExercisesByDay(day: string):  Array<SheetExercise> {

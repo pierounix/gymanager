@@ -18,7 +18,7 @@ import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-mome
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from './services/request-interceptor';
 import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exercise-musclelist.component';
-
+import { AlertModule } from './shared';
 
 
 @NgModule({
@@ -41,7 +41,8 @@ import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exe
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertModule
   ],
   entryComponents: [NewExerciseComponentDialogComponent,
                     EditExerciseComponentDialogComponent],

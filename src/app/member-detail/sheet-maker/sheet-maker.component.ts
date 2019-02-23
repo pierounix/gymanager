@@ -4,7 +4,7 @@ import { Sheet } from 'src/app/models/Sheet';
 import { SheetExercise } from 'src/app/models/SheetExercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { SheetExerciseService } from 'src/app/services/sheet-exercise.service';
-import { IfStmt } from '@angular/compiler';
+import { AlertService } from 'src/app/services/alert-service.service';
 
 let uniqueId = 0;
 
@@ -38,7 +38,8 @@ export class SheetMakerComponent implements OnInit {
   day: string;
 
   constructor(private exerciseService: ExerciseService,
-    private sheetExerciseService: SheetExerciseService) {
+    private sheetExerciseService: SheetExerciseService,
+    private alertService: AlertService) {
    }
 
   ngOnInit() {
