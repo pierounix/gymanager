@@ -85,10 +85,12 @@ export class MemberDetailComponent implements OnInit {
         se.exercise_title = this.sheetExercises[i].exercise_title;
         se.note = this.sheetExercises[i].note;
         se.num_exercise = numEx++;
+        se.id_sheet = this.sheet.id;
         seList.push(se);
       }
   }
   seList.forEach(f => this.sheetExercises.push(f));
+  this.isSheetUpdated = true;
 
   }
 

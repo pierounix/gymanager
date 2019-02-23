@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Exercise } from '../models/Exercise';
 import { ExerciseService } from '../services/exercise.service';
+import { Icon } from '../models/Icon';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
+import { IconService } from '../services/icon.service';
 
 @Component({
   selector: 'app-exercise',
@@ -14,7 +17,10 @@ export class ExerciseComponent implements OnInit {
 
   @Output() exerciseRemoved = new EventEmitter<number>();
 
-  constructor(private exerciseService: ExerciseService) { }
+  @Output() newExerciseAdded = new EventEmitter<any>();
+
+  constructor(public dialog: MatDialog,
+              private exerciseService: ExerciseService) { }
 
   ngOnInit() {
   }
@@ -32,6 +38,72 @@ export class ExerciseComponent implements OnInit {
            }
        );
     this.exerciseRemoved.emit(id);
+  }
+
+  openDialogEdit(): void {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.exercise;
+    dialogConfig.width = '800px';
+
+// tslint:disable-next-line: no-use-before-declare
+    const dialogRef = this.dialog.open(EditExerciseComponentDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.exercise = result;
+      this.newExerciseAdded.emit();
+    });
+  }
+
+}
+
+
+@Component({
+  selector: 'app-edit-exercise-dialog',
+  templateUrl: 'editexercise-dialog.html',
+  styleUrls: ['./exercise.component.css']
+})
+export class EditExerciseComponentDialogComponent {
+
+  icons: Icon[];
+
+  constructor(
+    public dialogRef: MatDialogRef<EditExerciseComponentDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public exercise: Exercise, private iconService: IconService,
+    private exerciseService: ExerciseService
+  ) {
+    this.getIcons();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onSave(): void {
+    if (this.exercise.image_path != null
+      && this.exercise.title != null) {
+        this.saveExercise();
+        this.dialogRef.close(this.exercise);
+      }
+  }
+
+  selectImage(path: string) {
+    this.exercise.image_path = path;
+  }
+
+  getIcons() {
+    this.iconService.getIcons().subscribe( icons => {
+      this.icons = icons;
+    });
+  }
+
+  saveExercise() {
+    this.exerciseService.updateExercise(this.exercise).subscribe(
+      data => {},
+           error => {
+               console.log('ERROR updating exercise', error);
+           }
+       );
   }
 
 }

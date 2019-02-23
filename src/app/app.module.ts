@@ -8,7 +8,7 @@ import { FlexLayoutModule} from '@angular/flex-layout';
 import { MembersComponent } from './members/members.component';
 import { MemberService } from './services/member.service';
 import { ExercisesComponent } from './exercises/exercises.component';
-import { ExerciseComponent } from './exercise/exercise.component';
+import { ExerciseComponent, EditExerciseComponentDialogComponent } from './exercise/exercise.component';
 import { NewExerciseComponent, NewExerciseComponentDialogComponent } from './newexercise/newexercise.component';
 import { FormsModule } from '@angular/forms';
 import { MemberDetailComponent } from './member-detail/member-detail.component';
@@ -29,6 +29,7 @@ import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exe
     ExerciseComponent,
     NewExerciseComponent,
     NewExerciseComponentDialogComponent,
+    EditExerciseComponentDialogComponent,
     MemberDetailComponent,
     SheetMakerComponent,
     ExerciseMusclelistComponent
@@ -42,7 +43,8 @@ import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exe
     FormsModule,
     HttpClientModule
   ],
-  entryComponents: [NewExerciseComponentDialogComponent],
+  entryComponents: [NewExerciseComponentDialogComponent,
+                    EditExerciseComponentDialogComponent],
   providers: [MemberService,
     {
       provide: HTTP_INTERCEPTORS,

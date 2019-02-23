@@ -6,6 +6,13 @@
         <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
           <h3>Membri</h3>
         </mat-card-title>
+
+
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Ricerca">
+  </mat-form-field>
+</div>
         <mat-card-content>
           <div>
             <mat-table #table [dataSource]="memberDataSource">

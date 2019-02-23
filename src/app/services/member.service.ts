@@ -33,6 +33,11 @@ export class MemberService {
     return this.httpClient.get<Member[]>(API_URL + '/members');
   }
 
+  getMembersBySearch(search: string): Observable<Member[]> {
+    // return of <Member[]>(this.members);
+    return this.httpClient.get<Member[]>(API_URL + '/members/search/' + search);
+  }
+
   getMember(id: number): Observable<Member> {
     // return this.members.find(member => member.id === id);
     const url = API_URL + '/members/' + id;

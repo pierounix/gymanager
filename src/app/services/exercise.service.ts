@@ -43,6 +43,10 @@ export class ExerciseService {
     return this.httpClient.post<Exercise>(API_URL + '/exercises/', exercise, httpOptions);
   }
 
+  updateExercise(exercise: Exercise): Observable<Exercise> {
+    return this.httpClient.put<Exercise>(API_URL + '/exercises/', exercise);
+  }
+
   removeExercise(id: number): Observable<Exercise> {
     return this.httpClient.delete<Exercise>(API_URL + '/exercises/' + id);
   }

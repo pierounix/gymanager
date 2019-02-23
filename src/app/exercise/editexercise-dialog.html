@@ -1,0 +1,68 @@
+<div mat-dialog-title>
+  <div fxLayout="row">
+  <h2>Nuovo esercizio</h2>
+  <div fxFlexOffset="25"><h6>Immagine selzionata</h6></div>
+  <div fxFlexOffset="2" fxFlex="12" style="border-style: solid;border-width: 1px;">
+  <img fxFill *ngIf="exercise.image_path" src="{{exercise.image_path}}"> </div>
+</div>
+</div>
+
+<mat-dialog-content>
+  <form>
+    <mat-form-field style="width: 100%">
+      <input
+        matInput
+        readonly
+        [(ngModel)]="exercise.muscle"
+        placeholder="Massa muscolare"
+        name="muscleMass"
+        id="muscleMass"
+      />
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input
+        matInput
+        required
+        [(ngModel)]="exercise.title"
+        placeholder="Titolo esercizio"
+        name="title"
+        maxlength="40"
+      />
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <mat-label>Descrizione</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="exercise.description"
+        name="description"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="images-container">
+      <h3 style="color:red" [hidden]="exercise.image_path">Scegli una immagine</h3>
+      <mat-grid-list cols="8" rowHeight="70px">
+        <mat-grid-tile *ngFor="let icon of icons">
+          <div fxFill class="container">
+            <button id="imageButton" fxFill mat-raised-button (click)="selectImage(icon.path)">
+              <img fxFill src="{{ icon.path }}" />
+              <div class="overlay">
+                <div class="text">{{ icon.title }}</div>
+              </div>
+            </button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Annulla</button>
+      <button mat-button (click)="onSave()">Salva</button>
+    </div>
+  </form>
+</mat-dialog-content>

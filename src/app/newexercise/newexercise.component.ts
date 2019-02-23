@@ -29,6 +29,7 @@ export class NewExerciseComponent {
     dialogConfig.data = this.newexercise;
     dialogConfig.width = '800px';
 
+// tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(NewExerciseComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -37,6 +38,8 @@ export class NewExerciseComponent {
     });
   }
 }
+
+
 
 @Component({
   selector: 'app-newexercise-edialog',
