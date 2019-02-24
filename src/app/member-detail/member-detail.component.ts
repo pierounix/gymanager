@@ -71,17 +71,16 @@ export class MemberDetailComponent implements OnInit {
     const dayToUpdate = $event['todd'];
 
     // Clear the target day
-
     const sheetExerciseList = this.sheetExercises.filter(function(exer) {
       return exer.day !== dayToUpdate;
     });
-
     this.sheetExercises = sheetExerciseList;
 
+    // Copy all exercises of the fromDay to a new list
     const seList = new Array<SheetExercise>();
     let numEx = 1;
     for (let i = 0; i < this.sheetExercises.length; i++) {
-      if (this.sheetExercises[i].day = dayFromUpdate) {
+      if (this.sheetExercises[i].day === dayFromUpdate) {
         const se = new SheetExercise();
         se.day = dayToUpdate;
         se.exercise_mode = this.sheetExercises[i].exercise_mode;

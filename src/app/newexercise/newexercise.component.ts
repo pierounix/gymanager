@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angu
 import { IconService } from '../services/icon.service';
 import { Icon } from '../models/Icon';
 import { ExerciseService } from '../services/exercise.service';
+import { AlertService } from '../services/alert-service.service';
 
 @Component({
   selector: 'app-newexercise',
@@ -19,7 +20,8 @@ export class NewExerciseComponent {
   @Input()
   muscleMass: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+              private alertService: AlertService) {}
 
   openDialog(): void {
     this.newexercise = new Exercise();
@@ -34,7 +36,10 @@ export class NewExerciseComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.newexercise = result;
-      this.newExerciseAdded.emit();
+      if (this.newexercise.title != null) {
+        this.alertService.create('INFO', 5000, 'Esercizio aggiunto');
+        this.newExerciseAdded.emit();
+      }
     });
   }
 }

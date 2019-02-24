@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Exercise } from 'src/app/models/Exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { AlertService } from 'src/app/services/alert-service.service';
 
 @Component({
   selector: 'app-exercise-musclelist',
@@ -14,7 +15,8 @@ export class ExerciseMusclelistComponent implements OnInit {
   @Input()
   muscle: string;
 
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(private exerciseService: ExerciseService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.getExercisesByMuscleMass(this.muscle);
@@ -28,7 +30,7 @@ export class ExerciseMusclelistComponent implements OnInit {
 
     const index = this.exercises.findIndex( ex => ex.id === $event );
     this.exercises.splice(index, 1);
-    console.log(this.exercises);
+    this.alertService.create('INFO', 5000, 'Esercizio rimosso');
   }
 
   getExercisesByMuscleMass(muscle: string) {
