@@ -19,6 +19,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from './services/request-interceptor';
 import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exercise-musclelist.component';
 import { AlertModule } from './shared';
+import { LoginComponent } from './shared/login/login.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AlertModule } from './shared';
     EditExerciseComponentDialogComponent,
     MemberDetailComponent,
     SheetMakerComponent,
-    ExerciseMusclelistComponent
+    ExerciseMusclelistComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

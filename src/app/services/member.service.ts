@@ -19,13 +19,6 @@ const httpOptions = {
 export class MemberService {
 
 
-  members: Member[] = [
-    // tslint:disable-next-line:max-line-length
-    {id: 1, first_name: 'Piero', last_name: 'Uniti', date_of_birth: new Date(), address: 'via Starza, Sant\'Agata De\'Goti,SNC', status: 'Attivo', sheet: 'SI'},
-    // tslint:disable-next-line:max-line-length
-    {id: 2, first_name: 'Sara', last_name: 'Abbatiello', date_of_birth: new Date(), address: 'c.da Traugnano, Sant\'Agata De\'Goti,6', status: 'Scaduto', sheet: 'NO'},
-  ];
-
   constructor(private httpClient: HttpClient) { }
 
   getMembers(): Observable<Member[]> {

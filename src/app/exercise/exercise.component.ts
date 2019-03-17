@@ -4,6 +4,7 @@ import { ExerciseService } from '../services/exercise.service';
 import { Icon } from '../models/Icon';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { IconService } from '../services/icon.service';
+import { AlertService } from '../services/alert-service.service';
 
 @Component({
   selector: 'app-exercise',
@@ -50,8 +51,7 @@ export class ExerciseComponent implements OnInit {
     const dialogRef = this.dialog.open(EditExerciseComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.exercise = result;
-      this.newExerciseAdded.emit();
+
     });
   }
 
@@ -69,7 +69,9 @@ export class EditExerciseComponentDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<EditExerciseComponentDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public exercise: Exercise, private iconService: IconService,
+    @Inject(MAT_DIALOG_DATA) public exercise: Exercise,
+    private alertService: AlertService,
+    private iconService: IconService,
     private exerciseService: ExerciseService
   ) {
     this.getIcons();
@@ -83,6 +85,7 @@ export class EditExerciseComponentDialogComponent {
     if (this.exercise.image_path != null
       && this.exercise.title != null) {
         this.saveExercise();
+        this.alertService.create('INFO', 5000, 'Esercizio modificato');
         this.dialogRef.close(this.exercise);
       }
   }
