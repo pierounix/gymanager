@@ -11,6 +11,10 @@ a {
   color: white;
 }
 
+.welcome-msg{
+  font-size: 12px;
+}
+
 a:hover,
 a:active {
   color: lightgray;

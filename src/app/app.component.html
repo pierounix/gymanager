@@ -31,28 +31,30 @@
           FitGym Club
        </a>
      </div>
+
      <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+        <a fxFlex="10"  *ngIf="isUserLoggedIn()" class="welcome-msg">Benvenuto {{this.memberName}}</a>
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
-            <li>
+            <li *ngIf="isUserLoggedIn()">
                 <a routerLink="/members">
                   <mat-icon class="icon">person</mat-icon>
                   <span  class="label">Membri</span>
                  </a>
             </li>
-            <li>
+            <li *ngIf="isUserLoggedIn()">
               <a routerLink="/exercises">
                   <mat-icon class="icon">fitness_center</mat-icon>
                   <span class="label">Esercizi</span>
               </a>
             </li>
-            <li>
+            <li *ngIf="isUserLoggedIn()">
                 <a>
                     <mat-icon class="icon">dashboard</mat-icon>
                     <span class="label">Dashboard</span>
                 </a>
               </li>
-            <li>
-                <a>
+            <li *ngIf="isUserLoggedIn()">
+                <a (click)="logout()">
                   <mat-icon class="icon">input</mat-icon>
                   <span class="label">LogOut</span>
                  </a>

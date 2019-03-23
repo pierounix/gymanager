@@ -35,11 +35,11 @@ export class LoginComponent implements OnInit {
         .subscribe(
             data => {
                 // this.router.navigate(['\\']);
-                console.log(this.authenticationService.currentUserValue);
                 this.showSpinner = false;
+                this.router.navigate(['/', 'members']);
             },
             error => {
-                this.errorMessage = 'Il server non risponde';
+                this.errorMessage = error.error;
                 this.showSpinner = false;
             });
           } else {
@@ -48,6 +48,11 @@ export class LoginComponent implements OnInit {
           }
   }
 
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+}
 
 
 }
