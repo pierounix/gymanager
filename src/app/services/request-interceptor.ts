@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
+import { AlertService } from './alert-service.service';
 
 
 @Injectable()
@@ -20,7 +21,8 @@ import { Router } from '@angular/router';
 export class RequestInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) {}
+              private router: Router,
+              private alertService: AlertService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -37,7 +39,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     return next.handle(request).do((event: HttpEvent<any>) => { }, (err: any) => {
       if (err) {
-        // auto logout if 401 response returned from api
+        this.alertService.create('ERROR', 5000, 'Errore server');
         }
       });
 
@@ -45,4 +47,6 @@ export class RequestInterceptor implements HttpInterceptor {
 
 
     }
+
+
 }

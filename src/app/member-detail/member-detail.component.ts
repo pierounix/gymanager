@@ -41,9 +41,13 @@ export class MemberDetailComponent implements OnInit {
           this.member = member;
           this.sheetService.getSheetByMemberId(this.member.id).subscribe (sheet => {
             this.sheet = sheet;
-            this.sheetExerciseService.getSheetExercises(this.sheet.id).subscribe (sheetExercises => {
-              this.sheetExercises = sheetExercises;
-            });
+            if (sheet == null ) {
+              this.sheet = new Sheet();
+            } else {
+              this.sheetExerciseService.getSheetExercises(this.sheet.id).subscribe (sheetExercises => {
+                this.sheetExercises = sheetExercises;
+              });
+            }
           });
         });
        }
@@ -131,7 +135,13 @@ export class MemberDetailComponent implements OnInit {
     this.member.expiry_date = _edate;
     }
     this.memberService.updateMember(this.member);
-    this.sheetService.updateSheet(this.sheet);
+    if (this.sheet.id != null) {
+      this.sheetService.updateSheet(this.sheet);
+    } else {
+      this.sheet.id_member = this.member.id;
+      this.sheetService.addSheet(this.sheet);
+    }
+
     this._markFormPristine(memberform);
     this.alertService.create('INFO', 5000, 'Informazioni aggiornate');
   }
