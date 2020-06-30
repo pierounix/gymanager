@@ -6,6 +6,9 @@ import { Member } from '../models/Member';
 import { Router } from '@angular/router';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { catchError, finalize, map } from 'rxjs/operators';
+import { SheetService } from '../services/sheet.service';
+import { SheetExerciseService } from '../services/sheet-exercise.service';
+import { AlertService } from '../services/alert-service.service';
 
 export class MemberDataSource extends DataSource<any> {
 
@@ -42,9 +45,12 @@ export class MemberDataSource extends DataSource<any> {
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.css']
 })
+
 export class MembersComponent implements OnInit {
 
-  constructor(private memberService: MemberService, private router: Router) { }
+  constructor(private memberService: MemberService,
+    private router: Router,
+    private alertService: AlertService) { }
 
   displayedColumns = ['first_name', 'last_name', 'date_of_birth', 'sheet', 'status', 'details'];
 
@@ -57,6 +63,25 @@ export class MembersComponent implements OnInit {
 
   onSelectMember(member: Member) {
     this.router.navigate(['members', member.id]);
+  }
+
+  onDeleteMember(member: Member) {
+
+    const currentUser: Member = JSON.parse(localStorage.getItem('currentUser'));
+    if (member.id === currentUser.id) {
+      this.alertService.create('INFO', 5000, 'Impossibile cancellare utente corrente');
+    } else {
+      this.memberService.deleteMember(member.id).subscribe(
+        data => {
+          this.memberDataSource.loadMembers('');
+        },
+             error => {
+                 console.log('ERROR updating exercise', error);
+                 this.memberDataSource.loadMembers('');
+             }
+         );
+    }
+
 
   }
 

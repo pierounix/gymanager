@@ -26,7 +26,7 @@ export class AuthenticationService {
         return this.http.post<any>(API_URL + '/login', { email, password })
             .pipe(map(res => {
                 // login successful if there's a jwt token in the response
-                if (res && res.access_token) {
+                if (res && res.access_token && res.user.isAdmin == 1) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     const member = res.user;
                     member.token = res.access_token;

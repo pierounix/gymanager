@@ -48,11 +48,14 @@ export class MemberService {
         );
   }
 
+  deleteMember(id: number): Observable<Member> {
+    return this.httpClient.delete<Member>(API_URL + '/members/' + id);
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.log('ciao'); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);

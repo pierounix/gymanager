@@ -8,6 +8,7 @@ import { SheetExercise } from '../models/SheetExercise';
 import { SheetExerciseService } from '../services/sheet-exercise.service';
 import { NgForm, FormGroup } from '@angular/forms';
 import { AlertService } from '../services/alert-service.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-member-detail',
@@ -102,20 +103,55 @@ export class MemberDetailComponent implements OnInit {
   }
 
   saveSheet() {
-    this.sheetExerciseService.removeSheetExercises(this.sheet.id).subscribe(
-      data => {
-        this.sheetExerciseService.uploadSheetExercises(this.sheetExercises).subscribe(
-          data1 => {},
-               error => {
-                   console.log('ERROR updating exercises', error);
-               }
-           );
-      },
-      error => {
-          console.log('ERROR updating exercises', error);
-      }
-    );
-    this.alertService.create('INFO', 5000, 'Scheda salvata');
+    // In case the sheet is not yet created
+    if (this.sheet.id == null) {
+      this.sheet.id_member = this.member.id;
+      this.sheetService.addSheet(this.sheet);
+      this.sheetService.getSheetByMemberId(this.member.id).subscribe (sheet => {
+        this.sheet = sheet;
+        if (sheet == null ) {
+          this.alertService.create('ERROR', 5000, 'Errore server');
+        } else {
+
+          this.sheetExercises.forEach(se => se.id_sheet = sheet.id);
+
+          this.sheetExerciseService.removeSheetExercises(this.sheet.id).subscribe(
+            data => {
+              this.sheetExerciseService.uploadSheetExercises(this.sheetExercises).subscribe(
+                data1 => {},
+                     error => {
+                         console.log('ERROR updating exercises', error);
+                     }
+                 );
+            },
+            error => {
+                console.log('ERROR updating exercises', error);
+            }
+          );
+          this.alertService.create('INFO', 5000, 'Scheda salvata');
+        }
+      });
+
+    // In case the Sheet is already created
+    } else {
+      this.sheetExerciseService.removeSheetExercises(this.sheet.id).subscribe(
+        data => {
+          this.sheetExerciseService.uploadSheetExercises(this.sheetExercises).subscribe(
+            data1 => {},
+                 error => {
+                     console.log('ERROR updating exercises', error);
+                 }
+             );
+        },
+        error => {
+            console.log('ERROR updating exercises', error);
+        }
+      );
+      this.alertService.create('INFO', 5000, 'Scheda salvata');
+    }
+
+
+
     this.isSheetUpdated = false;
   }
 

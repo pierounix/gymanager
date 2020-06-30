@@ -32,9 +32,6 @@ export class AlertComponent implements OnInit {
        this.snackBar.open(this.message, this.type, {
         duration: this.time,
       });
-
-
-
       }
       );
   }
