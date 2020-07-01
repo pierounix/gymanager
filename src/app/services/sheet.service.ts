@@ -48,5 +48,9 @@ export class SheetService {
        );
   }
 
+  deleteSheet(id: number): Observable<Sheet> {
+    return this.httpClient.delete<Sheet>(API_URL + '/sheets/' + id);
+  }
+
 
 }

@@ -40,6 +40,7 @@ export class RequestInterceptor implements HttpInterceptor {
     return next.handle(request).do((event: HttpEvent<any>) => { }, (err: any) => {
       if (err) {
         this.alertService.create('ERROR', 5000, 'Errore server');
+        this.router.navigate(['/', 'login']);
         }
       });
 

@@ -183,6 +183,7 @@ export class MemberDetailComponent implements OnInit {
   }
 
   getSheetExercisesByDay(day: string):  Array<SheetExercise> {
+    console.log(this.sheetExercises);
     return this.sheetExercises.filter(sheetExercise => sheetExercise.day === day);
   }
 
