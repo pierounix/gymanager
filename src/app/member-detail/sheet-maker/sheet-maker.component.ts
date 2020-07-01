@@ -88,7 +88,7 @@ export class SheetMakerComponent implements OnInit {
     }
   }
 
-  private getExercisesByMuscleMass(muscleMass: string) {
+  getExercisesByMuscleMass(muscleMass: string) {
     this.selectedExercise = new Exercise();
     this.sheetExercise = new SheetExercise();
     this.exerciseService.getExercisesByMuscleMass(muscleMass).subscribe(exercises => {
@@ -96,7 +96,7 @@ export class SheetMakerComponent implements OnInit {
     });
   }
 
-  private onSelectExercise(id_exercise: number) {
+  onSelectExercise(id_exercise: number) {
     this.exerciseService.getExerciseById(+id_exercise).subscribe(exercise => {
       this.selectedExercise = exercise;
     });
