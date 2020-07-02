@@ -22,7 +22,7 @@
     <!--end of exercise list-->
     <div class="sheet-maker" fxFlex>
       <div fxFill fxLayout="row" fxLayoutAlign="start center">
-        <mat-form-field fxFlexOffset="10">
+        <mat-form-field fxFlexOffset="5" fxFlex="20">
           <mat-select [id]="'copySelect'+uid" [name]="'copy'+uid" [(ngModel)]="this.dayToCopyFrom" placeholder="Copia giornata da">
             <mat-option *ngIf="this.day !== 'Lunedì'" value="Lunedì">Lunedì</mat-option>
             <mat-option *ngIf="this.day !== 'Martedì'" value="Martedì">Martedì</mat-option>
@@ -31,15 +31,20 @@
             <mat-option *ngIf="this.day !== 'Venerdì'" value="Venerdì">Venerdì</mat-option>
           </mat-select>
         </mat-form-field>
-        <button [id]="'copyBtn'+uid" [name]="'copyBtn'+uid" (click)="copyDay(this.dayToCopyFrom)" fxFlexOffset="10" mat-stroked-button>Copia</button>
+        <button [id]="'copyBtn'+uid" [name]="'copyBtn'+uid" (click)="copyDay(this.dayToCopyFrom)" fxFlexOffset="5" mat-stroked-button>Copia</button>
       </div>
+
       <mat-divider class="divider"></mat-divider>
+
       <div style="margin-top:20px" fxLayout="row" fxLayoutAlign="start start">
-        <h3 fxFlexOffset="10">Aggiungi nuovo</h3>
+        <h3 fxFlexOffset="5">Aggiungi nuovo</h3>
       </div>
+
       <form [id]="'sheetForm'+uid"  (ngSubmit)="onAddExercise()">
         <div fxLayout="row" fxLayoutAlign="start start">
-          <div fxFlexOffset="10" fxLayout="column" fxLayoutAlign="start start">
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxFlexOffset="5" fxFlex="20">
+
             <mat-form-field>
               <mat-select [id]="'selectMuscle'+uid"
                 placeholder="Gruppo muscolare"
@@ -56,12 +61,14 @@
               </mat-select>
             </mat-form-field>
           </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxFlexOffset="5" fxFlex="20">
           <select [id]="'selectEx'+uid"
             [(ngModel)]="selectedExercise"
             (change)="onSelectExercise($event.target.value)"
             name="selectedExercise{{this.day}}"
             style="min-width:20%;"
-            fxFlexOffset="10"
+            fxFill
             required
             size="30"
           >
@@ -69,15 +76,18 @@
               {{ exercise.title }}</option
             >
           </select>
-          <div fxFlexOffset="10" fxLayout="column" fxLayoutAlign="start start">
-            <div style="border-style: 1px solid grey;">
-              <img
-                fxFlexOffset="10"
-                fxFlex="25"
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxFlexOffset="5" fxFlex="20">
+            <div style="border-style: 1px solid grey">
+              <h2 style="text-align:center;">{{ selectedExercise.title }}</h2>
+            </div>
+            <div id="container_img" style="border-style: 1px solid grey;">
+              <img class="image-container"
                 *ngIf="selectedExercise.image_path"
                 src="{{ selectedExercise.image_path }}"
               />
-            </div>
+          </div>
             <mat-form-field fxFlexOffset="10">
               <input [id]="'exMode'+uid"
                 [(ngModel)]="sheetExercise.exercise_mode"

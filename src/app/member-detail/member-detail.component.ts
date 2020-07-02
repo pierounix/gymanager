@@ -106,6 +106,9 @@ export class MemberDetailComponent implements OnInit {
     // In case the sheet is not yet created
     if (this.sheet.id == null) {
       this.sheet.id_member = this.member.id;
+      if(this.sheet.sheet_name == null || this.sheet.sheet_name === '') {
+        this.sheet.sheet_name = 'Allenamento';
+      }
       this.sheetService.addSheet(this.sheet);
       this.sheetService.getSheetByMemberId(this.member.id).subscribe (sheet => {
         this.sheet = sheet;
@@ -172,6 +175,9 @@ export class MemberDetailComponent implements OnInit {
     }
     this.memberService.updateMember(this.member);
     if (this.sheet.id != null) {
+      if(this.sheet.sheet_name == null || this.sheet.sheet_name === '') {
+        this.sheet.sheet_name = 'Allenamento';
+      }
       this.sheetService.updateSheet(this.sheet);
     } else {
       this.sheet.id_member = this.member.id;
