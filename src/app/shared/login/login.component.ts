@@ -39,7 +39,11 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/', 'members']);
             },
             error => {
-                this.errorMessage = error.error;
+                if ((typeof error.error) === 'string') {
+                  this.errorMessage = error.error;
+                } else {
+                  this.errorMessage = 'Server error';
+                }
                 this.showSpinner = false;
             });
           } else {
