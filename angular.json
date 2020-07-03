@@ -60,6 +60,7 @@
           "options": {
             "browserTarget": "fitgym:build"
           },
+          "proxyConfig": "src/proxy.conf.json",
           "configurations": {
             "production": {
               "browserTarget": "fitgym:build:production"
