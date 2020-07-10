@@ -50,11 +50,18 @@ export class IconUploaderComponent {
     const file: File = imageInput.files[0];
     const reader = new FileReader();
 
+
     reader.addEventListener('load', (event: any) => {
-      const safeUrl = this.sanitization.bypassSecurityTrustUrl(event.target.result);
-      this.selectedFile = new ImageSnippet(safeUrl, file);
-      this.selected = true;
-      this.icon =  new Icon();
+
+      if (file.size > 100000) {
+         this.alertService.create('INFO', 5000, 'File troppo grande. Dimensione massima 100 Kb');
+      } else {
+        const safeUrl = this.sanitization.bypassSecurityTrustUrl(event.target.result);
+        this.selectedFile = new ImageSnippet(safeUrl, file);
+        this.selected = true;
+        this.icon =  new Icon();
+      }
+
     });
     reader.readAsDataURL(file);
   }
