@@ -14,7 +14,10 @@ export class AppComponent {
   constructor(private authenticationService: AuthenticationService,
               private router: Router) {
     this.authenticationService.currentUser.subscribe(user => {
-      this.memberName = user.first_name;
+      if(user != null) {
+        this.memberName = user.first_name;
+      }
+
     });
   }
 

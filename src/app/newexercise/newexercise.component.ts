@@ -36,7 +36,7 @@ export class NewExerciseComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.newexercise = result;
-      if (this.newexercise.title != null) {
+      if (this.newexercise!= null && this.newexercise.title != null) {
         this.alertService.create('INFO', 5000, 'Esercizio aggiunto');
         this.newExerciseAdded.emit();
       }

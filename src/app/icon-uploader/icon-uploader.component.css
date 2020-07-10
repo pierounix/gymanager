@@ -1,0 +1,15 @@
+.image-container {
+  max-width: 150px;
+  max-height: 150px;
+  display: block;
+  margin-left: 50px;
+}
+
+
+.buttonUpload{
+  margin-left: 50px;
+ }
+
+ .input-icon{
+  margin-left: 50px;
+ }

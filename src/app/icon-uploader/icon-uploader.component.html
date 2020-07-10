@@ -1,0 +1,39 @@
+
+<div fxLayout="column" fxLayoutAlign="start start" fxFill>
+
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxFlexOffset="2" fxFill>
+
+
+      <label fxFlex="20" fxFlexOffset="2" class="image-upload-container btn btn-bwm">
+
+        <span>Seleziona immagine</span>
+        <input #imageInput fxFlexOffset="2" type="file" accept="image/*" (change)="processFile(imageInput)">
+      </label>
+
+    </div>
+
+    <div fxFlexOffset="2" style="border-style: 1px solid grey;" *ngIf="selected">
+      <img class="image-container" [src]="this.selectedFile.src" alt=alt />
+    </div>
+
+
+
+    <mat-form-field *ngIf="selected" class="input-icon" fxFlexOffset="2">
+      <input matInput type="text" [(ngModel)]="this.icon.title" placeholder="Titolo esercizio" required>
+    </mat-form-field>
+
+    <div fxFlexOffset="2" style="border-style: 1px solid grey;" *ngIf="selected">
+      <button class="buttonUpload" *ngIf="selected" (click)="uploadImage()" mat-raised-button color="primary">
+        Carica file
+        <mat-icon class="icon">cloud_upload</mat-icon>
+      </button>
+    </div>
+
+    <span fxFlexOffset="2"  class="input-icon" *ngIf="errorMessage" style="color:red">{{errorMessage}}</span>
+
+  <div *ngIf="selected && pending" class="img-loading-overlay">
+    <mat-spinner class= "input-icon" [style.display]="pending ? 'block' : 'none'"></mat-spinner>
+  </div>
+
+</div>

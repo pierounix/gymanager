@@ -5,6 +5,7 @@ import { Icon } from '../models/Icon';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { IconService } from '../services/icon.service';
 import { AlertService } from '../services/alert-service.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-exercise',
@@ -72,7 +73,8 @@ export class EditExerciseComponentDialogComponent {
     @Inject(MAT_DIALOG_DATA) public exercise: Exercise,
     private alertService: AlertService,
     private iconService: IconService,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    private sanitization: DomSanitizer
   ) {
     this.getIcons();
   }
@@ -97,7 +99,11 @@ export class EditExerciseComponentDialogComponent {
   getIcons() {
     this.iconService.getIcons().subscribe( icons => {
       this.icons = icons;
+      for (let i = 0; i < this.icons.length; i++) {
+        this.icons[i].safeUrl = this.sanitization.bypassSecurityTrustUrl(this.icons[i].path);
+       }
     });
+
   }
 
   saveExercise() {

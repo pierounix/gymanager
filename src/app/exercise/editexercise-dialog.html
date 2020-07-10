@@ -50,7 +50,7 @@
         <mat-grid-tile *ngFor="let icon of icons">
           <div fxFill class="container">
             <button id="imageButton" fxFill mat-raised-button (click)="selectImage(icon.path)">
-              <img fxFill src="{{ icon.path }}" />
+              <img fxFill [src]="icon.safeUrl" />
               <div class="overlay">
                 <div class="text">{{ icon.title }}</div>
               </div>

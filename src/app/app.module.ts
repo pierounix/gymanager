@@ -20,6 +20,7 @@ import { RequestInterceptor } from './services/request-interceptor';
 import { ExerciseMusclelistComponent } from './exercises/exercise-musclelist/exercise-musclelist.component';
 import { AlertModule } from './shared';
 import { LoginComponent } from './shared/login/login.component';
+import { IconUploaderComponent } from './icon-uploader/icon-uploader.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LoginComponent } from './shared/login/login.component';
     MemberDetailComponent,
     SheetMakerComponent,
     ExerciseMusclelistComponent,
-    LoginComponent
+    LoginComponent,
+    IconUploaderComponent
   ],
   imports: [
     BrowserModule,
