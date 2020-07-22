@@ -69,7 +69,8 @@ export class IconUploaderComponent {
   uploadImage(image: ImageSnippet) {
 
     if (this.icon.title) {
-      this.icon.path = IMAGES_URL + this.icon.title.replace(/\s/g, '');
+      // this.icon.path = IMAGES_URL + this.icon.title.replace(/\s/g, '');
+      this.icon.path = IMAGES_URL + this.selectedFile.file.name;
       this.pending = true;
 
       this.iconService.getIconByTitle(this.icon.title).subscribe(
